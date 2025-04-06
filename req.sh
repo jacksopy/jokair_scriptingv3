@@ -14,5 +14,6 @@ cd instakit
 pip install -r requirements.txt
 cd ..
 cd ..
+mkdir database
 sudo apt install  jq
 
