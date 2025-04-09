@@ -64,14 +64,14 @@ echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣦⣈�
 echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠻⣧⠀⠀⠉⠁⢀⡾⠃"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⠶⠶⠞⠋"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 echo 
-echo "+----------+------------+--------------------------+------------+---------------+----------------------------+"
-echo "/                                                     TOOLS2                                                 /"
-echo "+----------+------------+--------------------------+------------+---------------+----------------------------+"
-echo "/ xfreerdp / evil-winrm / impacket launcher script / metasploit /  crackmapexec /                                        /"                                                       
-echo "+----------+------------+--------------------------+------------+---------------+----------------------------+"
-echo "/    1     /      2     /            3             /      4     /        5      /                              /"
-echo "+----------+------------+--------------------------+------------+---------------+----------------------------+"
-echo "choose a tool                                                TOOLS1 97           99 leave"
+echo "+----------+------------+--------------------------+------------+---------------+----------+-----------------+-----------------------+"
+echo "/                                                     TOOLS2                                                                         /"
+echo "+----------+------------+--------------------------+------------+---------------+----------+-----------------+-----------------------+"
+echo "/ xfreerdp / evil-winrm / impacket launcher script / metasploit /  crackmapexec /  wpscan  /    xss strike   /    searchsploit       /"                                                       
+echo "+----------+------------+--------------------------+------------+---------------+----------+-----------------+-----------------------+"
+echo "/    1     /      2     /            3             /      4     /        5      /     6    /        7        /           8           /"
+echo "+----------+------------+--------------------------+------------+---------------+----------+-----------------+-----------------------+"
+echo "choose a tool                 osint  100        connection 101          TOOLS1 97        99 leave"
 read tool_choice2
 if [ $tool_choice2 = 1 ]; then
     echo "xfreerdp"
@@ -169,6 +169,70 @@ elif [ $tool_choice2 = 4 ]; then
     msfconsole
 elif [ $tool_choice2= 5 ]; then
     echo "crackmapexec"
+elif [ $tool_choice2 = 6 ]; then
+    echo "wpscan"
+    echo "choose your attack"
+    echo "6.1 enumeration de plugin (peut etre long)"
+    echo "6.2 enumeration de version de plugin et de plugin (cherche pas de buln)"
+    echo " 6.3 brute force attack"
+    echo "choose you're version"
+    read tool
+    if [ $tool = 6.1 ]; then
+        echo " choisis l'url"
+        read url
+        echo "choisir la version de l'attaque (aggressive ; passive ; mixed )"
+        read mode  
+        wpscan --url $url -e ap --plugins-version-detection $mode --plugins-detection $mode
+    elif [ $tool = 6.2 ]; then
+        echo "choisis l'url"
+        read url
+        echo "choisir la version de l'attaque (aggressive ; passive ; mixed )"
+        read mode 
+        wpscan --url $url --enumerate -e ap --plugins-version-detection $mode --plugins-detection $mode
+    elif [ $tool = 6.2 ]; then
+        echo " choisis l'url"
+        read url
+        echo "mettre la page de login"
+        read loginpage
+        echo "choisir entre plusieur pseudo a brute force (entre 1 et 3)"
+        read pseudo
+        if [ $pseudo = 1 ]; then
+            echo "met le pseudo a brute force"
+            read username
+            echo "met la wordlist"
+            wpscan --password-attack $loginpage -t 20 -U $username -P $wordlist --url $url
+        elif [ $pseudo = 2 ]; then
+            echo "met le pseudo a brute force"
+            read username
+            echo "met la wordlist"
+            wpscan --password-attack $loginpage -t 20 -U $username,$username -P $wordlist --url $url
+        elif [ $pseudo = 3 ]; then
+            echo "met le pseudo a brute force"
+            read username
+            echo "met la wordlist"
+            read wordlist 
+            wpscan --password-attack $loginpage -t 20 -U $username,$username,$username -P $wordlist --url $url
+        else  
+            ./2.sh
+            fi
+
+elif [ $tool_choice2 = 7 ]; then
+    echo "xss strike"
+    echo "met l'url ( a mettre en guillement )"
+    read url
+    python xsstrike.py -u $url 
+    
+elif [ $tool_choice2 = 8 ]; then
+    echo "searchsploit"
+    echo "met le contenu de la recherche pour l'exploit"
+    read search
+    searchsploit $search
+    echo "veut tu lancer un exploit y/n"
+    read exploit
+    if [ $exploit = y ]; then
+        echo "met le nom de l'exploit"
+        read nom_exploit
+        searchsploit -x $nom_exploit
 elif [ $tool_choice2 = 97 ]; then
     clear
     ./jokair_scripting.sh
@@ -178,6 +242,9 @@ elif [ $tool_choice2 = 99 ]; then
 elif [ $tool_choice2 = 100 ]; then
     clear
     ./osint.sh
+elif [ $tool_choice2 = 100 ]; then
+    clear
+    ./connection.sh
 else
     ./2.sh
 fi
