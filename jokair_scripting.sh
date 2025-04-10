@@ -54,7 +54,7 @@ echo "/ nmap  / gobuster/ hydra / sqlmap /          john           / john altern
 echo "+-------+---------+------+--------+--------------------------+-------------------------+------------+-------------+"
 echo "/   1   /    2    /  3   /    4   /    5 (dont work well)    /            6             /      7    /      8      /"
 echo "+-------+---------+------+--------+--------------------------+-------------------------------------+--------------+"
-echo "choose a tool                                       osint  100       TOOLS2 98       99 leave"
+echo "choose a tool                  connection 101        osint  100       TOOLS2 98       99 leave"
 read tool_choice
 if [ $tool_choice = 1 ] ; then
     echo "nmap"
