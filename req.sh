@@ -3,6 +3,7 @@ chmod +x osint.sh
 chmod +x jokair_scripting.sh 
 chmod +x update.sh
 chmod +x lookup.sh
+chmod +x connection.sh
 mkdir other_pkg
 cd other_pkg 
 git clone https://github.com/rajkumardusad/IP-Tracer.git
