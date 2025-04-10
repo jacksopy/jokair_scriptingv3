@@ -242,9 +242,8 @@ elif [ $tool_choice2 = 99 ]; then
 elif [ $tool_choice2 = 100 ]; then
     clear
     ./osint.sh
-elif [ $tool_choice2 = 100 ]; then
+elif [ $tool_choice2 = 101 ]; then
     clear
     ./connection.sh
 else
     ./2.sh
-fi
